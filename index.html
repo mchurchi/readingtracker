@@ -1,454 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Reading Champions Leaderboard</title>
-  <!-- Google Fonts: Fredoka for playful display titles, Nunito for crisp readable names -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-color: #f2f5f9;
-      --board-bg: #ffffff;
-      --board-border: #2c3e50;
-      --primary-blue: #2563eb;
-      --header-navy: #1e293b;
-      --shadow-color: rgba(15, 23, 42, 0.12);
+      --board-border: #1e293b;
+      --rank1-color: #ef4444;
+      --rank2-color: #f97316;
+      --rank3-color: #eab308;
+      --rank-default: #3b82f6;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: 'Fredoka', sans-serif;
     }
 
     body {
-      font-family: 'Nunito', sans-serif;
-      background-color: var(--bg-color);
-      color: #334155;
+      background-color: #f8fafc;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
       min-height: 100vh;
-      padding: 24px 12px;
+      padding: 20px;
     }
 
-    /* Outer Whiteboard Container Frame */
-    .whiteboard-container {
+    /* Outer Whiteboard Container */
+    .whiteboard {
       width: 100%;
-      max-width: 680px;
-      background: var(--board-bg);
+      max-width: 700px;
+      background: #ffffff;
       border: 8px solid var(--board-border);
       border-radius: 20px;
-      box-shadow: 0 12px 30px var(--shadow-color);
-      padding: 24px;
-      position: relative;
+      padding: 30px;
+      box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.15), inset 0px 0px 15px rgba(0, 0, 0, 0.05);
     }
 
-    /* Title Section */
-    .board-header {
+    header {
       text-align: center;
-      margin-bottom: 24px;
-      position: relative;
-    }
-
-    .board-title {
-      font-family: 'Fredoka', cursive;
-      font-size: 36px;
-      font-weight: 700;
-      color: #1e3a8a;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      text-shadow: 2px 2px 0px #fbbf24;
-    }
-
-    /* URL Config Bar */
-    .config-bar {
-      background: #f8fafc;
-      border: 2px dashed #cbd5e1;
-      border-radius: 12px;
-      padding: 14px;
       margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      color: #1e3a8a;
+      letter-spacing: 1px;
+    }
+
+    /* Admin setup section */
+    .setup-box {
+      background: #f1f5f9;
+      border: 2px dashed #cbd5e1;
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 25px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
-    .config-bar label {
-      font-size: 13px;
-      font-weight: 800;
-      color: #64748b;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .setup-box input {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      font-size: 0.85rem;
     }
 
-    .input-group {
+    .btn-group {
       display: flex;
       gap: 8px;
     }
 
-    .config-bar input {
-      flex: 1;
-      padding: 10px 14px;
-      border: 2px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .config-bar input:focus {
-      border-color: var(--primary-blue);
-    }
-
-    .btn {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      padding: 10px 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: transform 0.1s, background-color 0.2s;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    .btn-primary {
-      background-color: #2563eb;
-      color: #ffffff;
-    }
-
-    .btn-primary:hover {
-      background-color: #1d4ed8;
-    }
-
-    .btn-primary:active {
-      transform: scale(0.98);
-    }
-
-    .btn-refresh {
-      background-color: #059669;
+    button {
+      background: #2563eb;
       color: white;
-      margin-top: 4px;
-      align-self: flex-end;
-    }
-
-    .btn-refresh:hover {
-      background-color: #047857;
-    }
-
-    /* Leaderboard Grid Header */
-    .grid-header {
-      display: grid;
-      grid-template-columns: 70px 1fr 120px;
-      padding: 8px 12px;
-      font-family: 'Fredoka', sans-serif;
-      font-size: 18px;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
       font-weight: 700;
-      color: var(--header-navy);
-      border-bottom: 3px solid var(--header-navy);
-      margin-bottom: 14px;
-      text-align: center;
+      cursor: pointer;
+      flex: 1;
     }
 
-    .grid-header div:nth-child(2) {
-      text-align: left;
-      padding-left: 10px;
+    button.refresh {
+      background: #059669;
     }
+
+    /* Table Header */
+    .table-header {
+      display: grid;
+      grid-template-columns: 80px 1fr 100px;
+      padding: 0 10px 10px 10px;
+      border-bottom: 3px solid var(--board-border);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
 
     /* Leaderboard Rows */
-    .leaderboard-list {
+    .leaderboard {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
+      margin-top: 15px;
     }
 
     .row {
       display: grid;
-      grid-template-columns: 70px 1fr 120px;
+      grid-template-columns: 80px 1fr 100px;
       align-items: center;
     }
 
-    /* Rank Column */
-    .rank-num {
-      font-family: 'Fredoka', cursive;
-      font-size: 28px;
+    .rank-number {
+      font-size: 1.6rem;
       font-weight: 700;
-      color: var(--header-navy);
+      color: #0f172a;
       text-align: center;
     }
 
-    /* Name Pill with Whiteboard Rivet Detail */
+    /* Whiteboard Pill Shape */
     .name-pill {
-      background: #ffffff;
-      border: 4px solid #3b82f6;
-      border-radius: 30px;
-      padding: 8px 16px;
+      border: 4px solid var(--rank-default);
+      border-radius: 50px;
+      padding: 8px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.06);
-      position: relative;
+      background: #ffffff;
     }
 
-    /* Circular Rivets / Screws */
-    .name-pill::before, .name-pill::after {
-      content: '';
-      width: 10px;
-      height: 10px;
-      background: #94a3b8;
-      border: 1px solid #64748b;
+    .dot {
+      width: 12px;
+      height: 12px;
+      background-color: #94a3b8;
       border-radius: 50%;
-      display: inline-block;
-      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.4);
     }
 
     .student-name {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 800;
-      font-size: 19px;
+      font-size: 1.25rem;
+      font-weight: 700;
       color: #0f172a;
-      flex: 1;
-      text-align: center;
-      padding: 0 8px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    /* Book Count Badge */
+    .row:nth-child(1) .name-pill { border-color: var(--rank1-color); }
+    .row:nth-child(2) .name-pill { border-color: var(--rank2-color); }
+    .row:nth-child(3) .name-pill { border-color: var(--rank3-color); }
+
     .books-badge {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-family: 'Fredoka', sans-serif;
-      font-size: 24px;
+      font-size: 1.4rem;
       font-weight: 700;
       color: #15803d;
-    }
-
-    .book-icon {
-      width: 26px;
-      height: 26px;
-    }
-
-    /* Status Messages */
-    .status-msg {
-      text-align: center;
-      padding: 30px;
-      font-size: 16px;
-      font-weight: 700;
-      color: #64748b;
-    }
-
-    .error-msg {
-      color: #dc2626;
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      border-radius: 8px;
-      padding: 12px;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-
-    @media (max-width: 480px) {
-      .whiteboard-container { padding: 14px; }
-      .board-title { font-size: 26px; }
-      .grid-header { grid-template-columns: 50px 1fr 90px; font-size: 15px; }
-      .row { grid-template-columns: 50px 1fr 90px; }
-      .rank-num { font-size: 22px; }
-      .student-name { font-size: 15px; }
-      .books-badge { font-size: 18px; }
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
     }
   </style>
 </head>
 <body>
 
-  <div class="whiteboard-container">
-    
-    <div class="board-header">
-      <h1 class="board-title">
-        <span>⭐</span> READING CHAMPIONS <span>⭐</span>
-      </h1>
-    </div>
+  <div class="whiteboard">
+    <header>
+      <h1>⭐ READING CHAMPIONS ⭐</h1>
+    </header>
 
-    <!-- Input bar to paste Google Sheets published CSV URL -->
-    <div class="config-bar">
-      <label for="csvUrlInput">Published Google Sheet CSV URL:</label>
-      <div class="input-group">
-        <input type="url" id="csvUrlInput" placeholder="https://docs.google.com/spreadsheets/d/e/.../pub?output=csv">
-        <button class="btn btn-primary" onclick="saveAndFetch()">Load Data</button>
+    <div class="setup-box">
+      <input type="text" id="csvUrl" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vRIywnvqgK7XGYOwXRuNRL2PISqC6HLI9hc_S7CO03r3ta3lp3aX9R4-aLsql9_L3TjCIeWrQCoGmIK/pub?gid=1859639164&single=true&output=csv" />
+      <div class="btn-group">
+        <button onclick="fetchData()">Load Data</button>
+        <button class="refresh" onclick="fetchData()">🔄 Refresh Leaderboard</button>
       </div>
-      <button class="btn btn-refresh" onclick="fetchLeaderboardData()">
-        🔄 Refresh Leaderboard
-      </button>
     </div>
 
-    <!-- Leaderboard Header -->
-    <div class="grid-header">
-      <div>RANK</div>
+    <div class="table-header">
+      <div class="text-center">RANK</div>
       <div>STUDENT NAME</div>
-      <div>BOOKS</div>
+      <div class="text-right">BOOKS</div>
     </div>
 
-    <!-- Container for dynamic student ranks -->
-    <div id="leaderboardList" class="leaderboard-list">
-      <div class="status-msg">Enter your CSV URL above to render the leaderboard.</div>
+    <div class="leaderboard" id="leaderboard">
+      <!-- Dynamic student rows render here -->
     </div>
-
   </div>
 
   <script>
-    // Color palette to alternate row borders like whiteboard tags
-    const PILL_COLORS = [
-      '#ef4444', // Red
-      '#f97316', // Orange
-      '#eab308', // Yellow
-      '#22c55e', // Green
-      '#06b6d4', // Cyan
-      '#3b82f6', // Blue
-      '#a855f7', // Purple
-      '#ec4899'  // Pink
-    ];
-
-    // SVG Book Icon
-    const BOOK_ICON_SVG = `
-      <svg class="book-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4 19.5C4 18.837 4.26339 18.2011 4.73223 17.7322C5.20107 17.2634 5.83696 17 6.5 17H20" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M6.5 2H20V22H6.5C5.83696 22 5.20107 21.7366 4.73223 21.2678C4.26339 20.7989 4 20.163 4 19.5V4.5C4 3.83696 4.26339 3.20107 4.73223 2.73223C5.20107 2.26339 5.83696 2 6.5 2Z" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    `;
-
-    // Load saved URL from browser memory automatically
-    window.addEventListener('DOMContentLoaded', () => {
-      const savedUrl = localStorage.getItem('reading_champ_csv_url');
-      if (savedUrl) {
-        document.getElementById('csvUrlInput').value = savedUrl;
-        fetchLeaderboardData();
-      }
-    });
-
-    function saveAndFetch() {
-      const url = document.getElementById('csvUrlInput').value.trim();
-      if (!url) {
-        alert('Please enter a valid Google Sheet CSV URL.');
-        return;
-      }
-      localStorage.setItem('reading_champ_csv_url', url);
-      fetchLeaderboardData();
-    }
-
-    // Main API Fetch function
-    async function fetchLeaderboardData() {
-      const url = document.getElementById('csvUrlInput').value.trim();
-      const container = document.getElementById('leaderboardList');
-
-      if (!url) {
-        container.innerHTML = '<div class="status-msg">Please enter a Google Sheet CSV URL above.</div>';
-        return;
-      }
-
-      container.innerHTML = '<div class="status-msg">Loading latest rankings...</div>';
+    async function fetchData() {
+      const url = document.getElementById('csvUrl').value;
+      if (!url) return;
 
       try {
-        // Fetch raw CSV text from Google Sheets URL
         const response = await fetch(url);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        const data = await response.text();
+        const rows = data.split('\n').slice(1);
+        const leaderboard = document.getElementById('leaderboard');
+        leaderboard.innerHTML = '';
 
-        const csvText = await response.text();
-        const data = parseCSV(csvText);
+        let students = [];
 
-        renderLeaderboard(data);
-      } catch (error) {
-        console.error('Fetch error:', error);
-        container.innerHTML = `
-          <div class="error-msg">
-            <strong>Failed to load data:</strong> ${error.message}<br><br>
-            <em>Ensure you clicked <strong>File > Share > Publish to web</strong> in Google Sheets and selected <strong>Comma-separated values (.csv)</strong>.</em>
-          </div>
-        `;
-      }
-    }
-
-    // Parse CSV Text to Objects
-    function parseCSV(text) {
-      const lines = text.split(/\r?\n/).filter(line => line.trim() !== '');
-      const parsedData = [];
-
-      lines.forEach((line, index) => {
-        // Skip header row
-        if (index === 0 && (line.toLowerCase().includes('student') || line.toLowerCase().includes('name'))) {
-          return;
-        }
-
-        const columns = line.split(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/).map(col => col.replace(/^\"|\"$/g, '').trim());
-
-        if (columns.length >= 2) {
-          const name = columns[0];
-          const count = parseInt(columns[1], 10) || 0;
-          if (name) {
-            parsedData.push({ name, count });
+        rows.forEach(row => {
+          const cols = row.split(',');
+          if (cols.length >= 2) {
+            const name = cols[0].trim().replace(/^"|"$/g, '');
+            const books = parseInt(cols[1].trim(), 10);
+            if (name && !isNaN(books)) {
+              students.push({ name, books });
+            }
           }
-        }
-      });
+        });
 
-      // Sort students in descending order
-      parsedData.sort((a, b) => b.count - a.count);
+        students.sort((a, b) => b.books - a.books);
 
-      return parsedData;
-    }
+        students.forEach((student, index) => {
+          const rank = index + 1;
+          const rowEl = document.createElement('div');
+          rowEl.className = 'row';
+          rowEl.innerHTML = `
+            <div class="rank-number">${rank}</div>
+            <div class="name-pill">
+              <span class="dot"></span>
+              <span class="student-name">${student.name}</span>
+              <span class="dot"></span>
+            </div>
+            <div class="books-badge">
+              <span>📗</span>
+              <span>${student.books}</span>
+            </div>
+          `;
+          leaderboard.appendChild(rowEl);
+        });
 
-    // Render HTML elements
-    function renderLeaderboard(data) {
-      const container = document.getElementById('leaderboardList');
-
-      if (data.length === 0) {
-        container.innerHTML = '<div class="status-msg">No student reading data found yet.</div>';
-        return;
+      } catch (err) {
+        console.error(err);
       }
-
-      container.innerHTML = '';
-
-      data.forEach((student, index) => {
-        const rank = index + 1;
-        const borderColor = PILL_COLORS[index % PILL_COLORS.length];
-
-        const row = document.createElement('div');
-        row.className = 'row';
-
-        row.innerHTML = `
-          <div class="rank-num">${rank}</div>
-          <div class="name-pill" style="border-color: ${borderColor};">
-            <span class="student-name">${escapeHtml(student.name)}</span>
-          </div>
-          <div class="books-badge">
-            ${BOOK_ICON_SVG}
-            <span>${student.count}</span>
-          </div>
-        `;
-
-        container.appendChild(row);
-      });
     }
 
-    function escapeHtml(text) {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
-    }
+    fetchData();
   </script>
 </body>
 </html>
