@@ -8,156 +8,114 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg-cream: #fefae0;
-      --navy-main: #1d3557;
-      --accent-gold: #ffb703;
-      --pill-bg: #ffffff;
-    }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Nunito', sans-serif;
-      background-color: var(--bg-cream);
-      color: var(--navy-main);
+      background-color: #1a1e36;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       min-height: 100vh;
       padding: 20px;
     }
 
-    .infographic-container {
+    /* Admin bar for Google Sheet link */
+    .config-bar {
       width: 100%;
       max-width: 600px;
-      background: #fffdf5;
-      border: 4px solid var(--navy-main);
-      border-radius: 20px;
-      padding: 30px 24px;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-    }
-
-    .config-bar {
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       display: flex;
       gap: 8px;
-      background: #f1f5f9;
-      padding: 8px;
+      background: #ffffff;
+      padding: 8px 12px;
       border-radius: 10px;
     }
 
     .config-bar input {
       flex: 1;
-      padding: 8px 12px;
+      padding: 8px;
       border: 1px solid #cbd5e1;
       border-radius: 6px;
-      font-size: 13px;
     }
 
     .config-bar button {
-      background: var(--navy-main);
+      background: #1d3557;
       color: white;
       border: none;
-      padding: 8px 14px;
+      padding: 8px 16px;
       border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
     }
 
-    .header-banner {
-      text-align: center;
-      margin-bottom: 24px;
+    /* Canvas overlay wrapper */
+    .leaderboard-container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
     }
 
-    .sub-title {
-      font-family: 'Fredoka', cursive;
-      font-size: 20px;
-      letter-spacing: 2px;
-      color: var(--accent-gold);
-      text-shadow: 1px 1px 0 var(--navy-main);
+    /* Fixed graphic background from Canva */
+    .bg-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 20px;
     }
 
-    .main-title {
-      font-family: 'Fredoka', cursive;
-      font-size: 34px;
-      color: var(--navy-main);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      line-height: 1.1;
-    }
-
-    .grid-header {
-      display: grid;
-      grid-template-columns: 50px 1fr 80px;
-      font-family: 'Fredoka', cursive;
-      font-size: 18px;
-      color: var(--navy-main);
-      text-align: center;
-      padding-bottom: 8px;
-      border-bottom: 3px solid var(--navy-main);
-      margin-bottom: 14px;
-    }
-
-    .leaderboard-rows {
+    /* Overlay grid positioning rows on top of Canva artwork */
+    .overlay-content {
+      position: absolute;
+      top: 35%; /* Adjust percentage based on where rows start in your image */
+      left: 8%;
+      width: 84%;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px; /* Spacing between student rows */
     }
 
     .row {
       display: grid;
-      grid-template-columns: 50px 1fr 80px;
+      grid-template-columns: 40px 1fr 60px;
       align-items: center;
     }
 
     .rank-num {
       font-family: 'Fredoka', cursive;
-      font-size: 24px;
-      color: var(--navy-main);
+      font-size: 22px;
+      color: #1d3557;
       text-align: center;
     }
 
-    .name-card {
-      background: var(--pill-bg);
-      border: 2px solid var(--navy-main);
-      border-radius: 12px;
-      padding: 8px 16px;
-      text-align: center;
+    .student-name {
       font-size: 18px;
       font-weight: 800;
-      color: var(--navy-main);
-      box-shadow: 2px 2px 0px var(--navy-main);
+      color: #1d3557;
+      text-align: center;
     }
 
     .books-count {
       font-family: 'Fredoka', cursive;
       font-size: 22px;
-      color: var(--navy-main);
+      color: #1d3557;
       text-align: center;
     }
   </style>
 </head>
 <body>
 
-  <div class="infographic-container">
-    <div class="config-bar">
-      <input type="url" id="csvUrl" placeholder="Paste published Google Sheet CSV URL..." value="https://docs.google.com/spreadsheets/d/e/2PACX-1vRIywnvqgK7XGYOwXRuNRL2PISqC6HLI9hc_S7CO03r3ta3lp3aX9R4-aLsql9_L3TjCIeWrQCoGmIK/pub?gid=1859639164&single=true&output=csv">
-      <button onclick="loadSheetData()">Sync Sheet</button>
-    </div>
+  <div class="config-bar">
+    <input type="url" id="csvUrl" placeholder="Paste published Google Sheet CSV URL...">
+    <button onclick="loadSheetData()">Sync Sheet</button>
+  </div>
 
-    <div class="header-banner">
-      <div class="sub-title">HIS</div>
-      <h1 class="main-title">READING CHALLENGE</h1>
-    </div>
+  <div class="leaderboard-container">
+    <!-- Your exported Canva design -->
+    <img src="background.png" class="bg-image" alt="Reading Challenge Background">
 
-    <div class="grid-header">
-      <div>#</div>
-      <div>STUDENT NAME</div>
-      <div>BOOKS</div>
-    </div>
-
-    <div id="boardRows" class="leaderboard-rows"></div>
+    <!-- Live text overlay -->
+    <div id="boardRows" class="overlay-content"></div>
   </div>
 
   <script>
@@ -165,8 +123,8 @@
       const saved = localStorage.getItem('gh_sheet_csv');
       if (saved) {
         document.getElementById('csvUrl').value = saved;
+        loadSheetData();
       }
-      loadSheetData();
     };
 
     function loadSheetData() {
@@ -198,14 +156,11 @@
             row.className = 'row';
             row.innerHTML = `
               <div class="rank-num">${index + 1}</div>
-              <div class="name-card">${item.name}</div>
+              <div class="student-name">${item.name}</div>
               <div class="books-count">${item.count}</div>
             `;
             container.appendChild(row);
           });
-        })
-        .catch(err => {
-          container.innerHTML = `<div style="text-align:center; color:red; padding:10px;">Failed to load data.</div>`;
         });
     }
   </script>
