@@ -3,71 +3,215 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HIS Reading Challenge</title>
-  <link rel="stylesheet" href="style.css">
+  <title>HIS Reading Challenge Leaderboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-cream: #fefae0;
+      --navy-main: #1d3557;
+      --accent-gold: #ffb703;
+      --pill-bg: #ffffff;
+      --text-dark: #1d3557;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .infographic-container {
+      width: 100%;
+      max-width: 600px;
+      background: #fffdf5;
+      border: 4px solid var(--navy-main);
+      border-radius: 20px;
+      padding: 30px 24px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+
+    /* Admin setup bar */
+    .config-bar {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 8px;
+      background: #f1f5f9;
+      padding: 8px;
+      border-radius: 10px;
+    }
+
+    .config-bar input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+
+    .config-bar button {
+      background: var(--navy-main);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Title section matching Canva graphic */
+    .header-banner {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .sub-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 20px;
+      letter-spacing: 2px;
+      color: var(--accent-gold);
+      text-shadow: 1px 1px 0 var(--navy-main);
+    }
+
+    .main-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 34px;
+      color: var(--navy-main);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      line-height: 1.1;
+    }
+
+    .grid-header {
+      display: grid;
+      grid-template-columns: 50px 1fr 80px;
+      font-family: 'Fredoka', cursive;
+      font-size: 18px;
+      color: var(--navy-main);
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 3px solid var(--navy-main);
+      margin-bottom: 14px;
+    }
+
+    .leaderboard-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 50px 1fr 80px;
+      align-items: center;
+    }
+
+    .rank-num {
+      font-family: 'Fredoka', cursive;
+      font-size: 24px;
+      color: var(--navy-main);
+      text-align: center;
+    }
+
+    .name-card {
+      background: var(--pill-bg);
+      border: 2px solid var(--navy-main);
+      border-radius: 12px;
+      padding: 8px 16px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--navy-main);
+      box-shadow: 2px 2px 0px var(--navy-main);
+    }
+
+    .books-count {
+      font-family: 'Fredoka', cursive;
+      font-size: 22px;
+      color: var(--navy-main);
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
 
-  <div class="leaderboard-container">
-    <header class="leaderboard-header">
-      <h2>HIS</h2>
-      <h1>READING</h1>
-      <h3>CHALLENGE</h3>
-    </header>
-
-    <div class="leaderboard-list">
-      <div class="leaderboard-row">
-        <span class="rank">1</span>
-        <div class="name-pill">Name</div>
-        <span class="score">15</span>
-      </div>
-      <div class="leaderboard-row">
-        <span class="rank">2</span>
-        <div class="name-pill">Name</div>
-        <span class="score">15</span>
-      </div>
-      <div class="leaderboard-row">
-        <span class="rank">3</span>
-        <div class="name-pill">Name</div>
-        <span class="score">15</span>
-      </div>
-      <div class="leaderboard-row">
-        <span class="rank">4</span>
-        <div class="name-pill">Name</div>
-        <span class="score">15</span>
-      </div>
-      <div class="leaderboard-row">
-        <span class="rank">5</span>
-        <div class="name-pill">Name</div>
-        <span class="score">15</span>
-      </div>
-      <div class="leaderboard-row">
-        <span class="rank">6</span>
-        <div class="name-pill">Name</div>
-        <span class="score">15</span>
-      </div>
-      <div class="leaderboard-row">
-        <span class="rank">7</span>
-        <div class="name-pill">Name</div>
-        <span class="score">15</span>
-      </div>
-      <div class="leaderboard-row">
-        <span class="rank">8</span>
-        <div class="name-pill">Name</div>
-        <span class="score">15</span>
-      </div>
-      <div class="leaderboard-row">
-        <span class="rank">9</span>
-        <div class="name-pill">Name</div>
-        <span class="score">15</span>
-      </div>
-      <div class="leaderboard-row">
-        <span class="rank">10</span>
-        <div class="name-pill">Name</div>
-        <span class="score">15</span>
-      </div>
+  <div class="infographic-container">
+    <div class="config-bar">
+      <input type="url" id="csvUrl" placeholder="Paste published Google Sheet CSV URL...">
+      <button onclick="loadSheetData()">Sync Sheet</button>
     </div>
+
+    <div class="header-banner">
+      <div class="sub-title">HIS</div>
+      <h1 class="main-title">READING CHALLENGE</h1>
+    </div>
+
+    <div class="grid-header">
+      <div>#</div>
+      <div>STUDENT NAME</div>
+      <div>BOOKS</div>
+    </div>
+
+    <div id="boardRows" class="leaderboard-rows"></div>
   </div>
 
+  <script>
+    window.onload = () => {
+      const saved = localStorage.getItem('gh_sheet_csv');
+      if (saved) {
+        document.getElementById('csvUrl').value = saved;
+        loadSheetData();
+      }
+    };
+
+    function loadSheetData() {
+      const url = document.getElementById('csvUrl').value.trim();
+      if (!url) return;
+      localStorage.setItem('gh_sheet_csv', url);
+      const container = document.getElementById('boardRows');
+
+      fetch(url)
+        .then(r => r.text())
+        .then(csvText => {
+          const lines = csvText.split(/\r?\n/).filter(l => l.trim() !== '');
+          const data = [];
+          lines.forEach((line, i) => {
+            if (i === 0 && (line.toLowerCase().includes('name') || line.toLowerCase().includes('student'))) return;
+            const cols = line.split(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/).map(c => c.replace(/^\"|\"$/g, '').trim());
+            if (cols.length >= 2) {
+              const name = cols[0];
+              const count = parseInt(cols[1], 10) || 0;
+              if (name) data.push({ name, count });
+            }
+          });
+
+          data.sort((a, b) => b.count - a.count);
+          container.innerHTML = '';
+
+          data.slice(0, 10).forEach((item, index) => {
+            const row = document.createElement('div');
+            row.className = 'row';
+            row.innerHTML = `
+              <div class="rank-num">${index + 1}</div>
+              <div class="name-card">${item.name}</div>
+              <div class="books-count">${item.count}</div>
+            `;
+            container.appendChild(row);
+          });
+        })
+        .catch(err => {
+          container.innerHTML = `<div style="text-align:center; color:red; padding:10px;">Failed to load data.</div>`;
+        });
+    }
+  </script>
 </body>
 </html>
