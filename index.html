@@ -3,320 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reading Champions Leaderboard</title>
-  
-  <!-- Fun classroom fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@800&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --board-bg: #ffffff;
-      --frame-color: #d1d5db;
-      --navy-dark: #1a237e;
-      --navy-header: #283593;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Nunito', sans-serif;
-      background-color: #eaeff5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-
-    /* Outer Frame simulating the rolling whiteboard frame */
-    .board-frame {
-      background: #f8fafc;
-      border: 12px solid #334155;
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      width: 100%;
-      max-width: 680px;
-    }
-
-    .whiteboard {
-      background: var(--board-bg);
-      border: 4px solid #cbd5e1;
-      border-radius: 8px;
-      padding: 24px;
-      position: relative;
-    }
-
-    /* "READING CHAMPIONS" Banner styling */
-    .title-banner {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    .title-text {
-      font-family: 'Fredoka', cursive;
-      font-size: 38px;
-      color: #3f51b5;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      /* Layered shadow to mimic colorful Cricut vinyl print */
-      text-shadow: 
-        3px 3px 0px #ffe082,
-        -1px -1px 0 #1a237e,  
-         1px -1px 0 #1a237e,
-        -1px  1px 0 #1a237e,
-         1px  1px 0 #1a237e;
-    }
-
-    /* Grid Columns matching the whiteboard structure */
-    .board-grid {
-      display: grid;
-      grid-template-columns: 80px 1fr 110px;
-      align-items: center;
-    }
-
-    .grid-header {
-      font-family: 'Fredoka', cursive;
-      font-size: 22px;
-      color: var(--navy-dark);
-      text-align: center;
-      padding-bottom: 10px;
-      border-bottom: 4px solid var(--navy-dark);
-      margin-bottom: 16px;
-      letter-spacing: 1px;
-    }
-
-    .grid-header.name-header {
-      text-align: center;
-    }
-
-    /* List Rows */
-    .leaderboard-rows {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .row {
-      display: grid;
-      grid-template-columns: 80px 1fr 110px;
-      align-items: center;
-    }
-
-    /* Big Rank Numbers on Left */
-    .rank-col {
-      font-family: 'Fredoka', cursive;
-      font-size: 34px;
-      color: var(--navy-dark);
-      text-align: center;
-      line-height: 1;
-    }
-
-    /* Whiteboard Magnet Pill Tags */
-    .name-pill-container {
-      padding: 0 8px;
-    }
-
-    .name-pill {
-      background: #ffffff;
-      border: 4px solid #3f51b5;
-      border-radius: 30px;
-      height: 44px;
-      padding: 0 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
-      position: relative;
-    }
-
-    /* Circular Rivet / Screw Heads on edges of the pill */
-    .rivet {
-      width: 12px;
-      height: 12px;
-      background: #94a3b8;
-      border: 1px solid #475569;
-      border-radius: 50%;
-      box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.5);
-      flex-shrink: 0;
-    }
-
-    .student-name {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 800;
-      font-size: 20px;
-      color: #0f172a;
-      text-align: center;
-      flex-grow: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      padding: 0 6px;
-    }
-
-    /* Books Count Column */
-    .books-col {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-family: 'Fredoka', cursive;
-      font-size: 28px;
-      color: var(--navy-dark);
-    }
-
-    .book-icon {
-      width: 28px;
-      height: 28px;
-    }
-
-    /* CSV Bar */
-    .config-bar {
-      margin-bottom: 20px;
-      display: flex;
-      gap: 8px;
-      background: #f1f5f9;
-      padding: 10px;
-      border-radius: 8px;
-    }
-
-    .config-bar input {
-      flex: 1;
-      padding: 8px 12px;
-      border: 2px solid #cbd5e1;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    .config-bar button {
-      background: #3f51b5;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  </style>
+  <title>HIS Reading Challenge</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="board-frame">
-    <div class="whiteboard">
+  <div class="leaderboard-container">
+    <header class="leaderboard-header">
+      <h2>HIS</h2>
+      <h1>READING</h1>
+      <h3>CHALLENGE</h3>
+    </header>
 
-      <!-- Published CSV Config -->
-      <div class="config-bar">
-        <input type="url" id="csvUrl" placeholder="Paste published Google Sheet CSV link...">
-        <button onclick="loadSheetData()">Sync Sheet</button>
+    <div class="leaderboard-list">
+      <div class="leaderboard-row">
+        <span class="rank">1</span>
+        <div class="name-pill">Name</div>
+        <span class="score">15</span>
       </div>
-
-      <!-- Board Header -->
-      <div class="title-banner">
-        <span style="font-size:32px;">⭐</span>
-        <h1 class="title-text">Reading Champions</h1>
-        <span style="font-size:32px;">⭐</span>
+      <div class="leaderboard-row">
+        <span class="rank">2</span>
+        <div class="name-pill">Name</div>
+        <span class="score">15</span>
       </div>
-
-      <!-- Table Header -->
-      <div class="board-grid grid-header">
-        <div>RANK</div>
-        <div class="name-header">STUDENT NAME</div>
-        <div>BOOKS</div>
+      <div class="leaderboard-row">
+        <span class="rank">3</span>
+        <div class="name-pill">Name</div>
+        <span class="score">15</span>
       </div>
-
-      <!-- Dynamic Rows Container -->
-      <div id="boardRows" class="leaderboard-rows">
-        <!-- Rendered rows appear here -->
+      <div class="leaderboard-row">
+        <span class="rank">4</span>
+        <div class="name-pill">Name</div>
+        <span class="score">15</span>
       </div>
-
+      <div class="leaderboard-row">
+        <span class="rank">5</span>
+        <div class="name-pill">Name</div>
+        <span class="score">15</span>
+      </div>
+      <div class="leaderboard-row">
+        <span class="rank">6</span>
+        <div class="name-pill">Name</div>
+        <span class="score">15</span>
+      </div>
+      <div class="leaderboard-row">
+        <span class="rank">7</span>
+        <div class="name-pill">Name</div>
+        <span class="score">15</span>
+      </div>
+      <div class="leaderboard-row">
+        <span class="rank">8</span>
+        <div class="name-pill">Name</div>
+        <span class="score">15</span>
+      </div>
+      <div class="leaderboard-row">
+        <span class="rank">9</span>
+        <div class="name-pill">Name</div>
+        <span class="score">15</span>
+      </div>
+      <div class="leaderboard-row">
+        <span class="rank">10</span>
+        <div class="name-pill">Name</div>
+        <span class="score">15</span>
+      </div>
     </div>
   </div>
 
-  <script>
-    // Color palette matching the whiteboard magnet pill borders
-    const PILL_COLORS = [
-      '#8e24aa', // Purple
-      '#e53935', // Red
-      '#fdd835', // Yellow
-      '#43a047', // Green
-      '#00acc1', // Teal
-      '#1e88e5', // Blue
-      '#fb8c00', // Orange
-      '#d81b60'  // Pink
-    ];
-
-    const BOOK_SVG = `
-      <svg class="book-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4 19.5C4 18.837 4.26339 18.2011 4.73223 17.7322C5.20107 17.2634 5.83696 17 6.5 17H20" stroke="#1a237e" stroke-width="2.5" stroke-linecap="round"/>
-        <path d="M6.5 2H20V22H6.5C5.83696 22 5.20107 21.7366 4.73223 21.2678C4.26339 20.7989 4 20.163 4 19.5V4.5C4 3.83696 4.26339 3.20107 4.73223 2.73223C5.20107 2.26339 5.83696 2 6.5 2Z" stroke="#1a237e" stroke-width="2.5"/>
-      </svg>
-    `;
-
-    window.onload = () => {
-      const saved = localStorage.getItem('gh_sheet_csv');
-      if (saved) {
-        document.getElementById('csvUrl').value = saved;
-        loadSheetData();
-      }
-    };
-
-    function loadSheetData() {
-      const url = document.getElementById('csvUrl').value.trim();
-      if (!url) return;
-
-      localStorage.setItem('gh_sheet_csv', url);
-      const container = document.getElementById('boardRows');
-
-      fetch(url)
-        .then(r => r.text())
-        .then(csvText => {
-          const lines = csvText.split(/\r?\n/).filter(l => l.trim() !== '');
-          const data = [];
-
-          lines.forEach((line, i) => {
-            if (i === 0 && (line.toLowerCase().includes('name') || line.toLowerCase().includes('student'))) return;
-            const cols = line.split(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/).map(c => c.replace(/^\"|\"$/g, '').trim());
-            if (cols.length >= 2) {
-              const name = cols[0];
-              const count = parseInt(cols[1], 10) || 0;
-              if (name) data.push({ name, count });
-            }
-          });
-
-          // Sort by books read count descending
-          data.sort((a, b) => b.count - a.count);
-
-          container.innerHTML = '';
-          data.slice(0, 10).forEach((item, index) => {
-            const color = PILL_COLORS[index % PILL_COLORS.length];
-            const row = document.createElement('div');
-            row.className = 'row';
-            row.innerHTML = `
-              <div class="rank-col">${index + 1}</div>
-              <div class="name-pill-container">
-                <div class="name-pill" style="border-color: ${color};">
-                  <div class="rivet"></div>
-                  <span class="student-name">${item.name}</span>
-                  <div class="rivet"></div>
-                </div>
-              </div>
-              <div class="books-col">
-                ${BOOK_SVG}
-                <span>${item.count}</span>
-              </div>
-            `;
-            container.appendChild(row);
-          });
-        })
-        .catch(err => {
-          container.innerHTML = `<div style="text-align:center; color:red; font-weight:bold; padding:20px;">Unable to fetch CSV. Verify Publish to Web setting.</div>`;
-        });
-    }
-  </script>
 </body>
 </html>
