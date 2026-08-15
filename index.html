@@ -11,14 +11,14 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-  font-family: 'Nunito', sans-serif;
-  background-color: #fefae0; /* Light cream background */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-}
+      font-family: 'Nunito', sans-serif;
+      background-color: #fefae0; /* Matching light cream background */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
 
     /* Admin bar for Google Sheet link */
     .config-bar {
@@ -30,6 +30,7 @@
       background: #ffffff;
       padding: 8px 12px;
       border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
 
     .config-bar input {
@@ -64,30 +65,29 @@
       border-radius: 20px;
     }
 
-    /* Overlay container aligned directly over the green cards */
+    /* Overlay container positioned directly over the green cards */
     .overlay-content {
       position: absolute;
-      top: 15.5%; /* Adjusts starting height */
-      left: 7%;
-      width: 86%;
+      top: 51%; /* Pushes text down below the main title artwork */
+      left: 10%;
+      width: 80%;
       display: flex;
       flex-direction: column;
-      gap: 2.35%; /* Controls spacing between rows to hit each green card */
-      height: 78%;
+      gap: 14px; /* Controls row spacing to hit each green card */
     }
 
     .row {
       display: grid;
-      grid-template-columns: 50px 1fr 60px;
+      grid-template-columns: 40px 1fr 50px;
       align-items: center;
-      height: 7.5%; /* Matches the height of each green pill card */
+      height: 48px; /* Matches the vertical height of your green pill cards */
     }
 
     .student-name {
       font-family: 'Nunito', sans-serif;
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 800;
-      color: #111827;
+      color: #1d3557;
       text-align: center;
       white-space: nowrap;
       overflow: hidden;
@@ -151,7 +151,7 @@
             const row = document.createElement('div');
             row.className = 'row';
             row.innerHTML = `
-              <div></div> <!-- Empty column to bypass the pre-printed rank number -->
+              <div></div> <!-- Empty placeholder so name centers in the green card -->
               <div class="student-name">${item.name}</div>
               <div class="books-count">${item.count}</div>
             `;
