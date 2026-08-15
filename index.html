@@ -13,7 +13,6 @@
       --navy-main: #1d3557;
       --accent-gold: #ffb703;
       --pill-bg: #ffffff;
-      --text-dark: #1d3557;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -21,7 +20,7 @@
     body {
       font-family: 'Nunito', sans-serif;
       background-color: var(--bg-cream);
-      color: var(--text-dark);
+      color: var(--navy-main);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -37,10 +36,8 @@
       border-radius: 20px;
       padding: 30px 24px;
       box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-      position: relative;
     }
 
-    /* Admin setup bar */
     .config-bar {
       margin-bottom: 20px;
       display: flex;
@@ -68,7 +65,6 @@
       cursor: pointer;
     }
 
-    /* Title section matching Canva graphic */
     .header-banner {
       text-align: center;
       margin-bottom: 24px;
@@ -146,7 +142,7 @@
 
   <div class="infographic-container">
     <div class="config-bar">
-      <input type="url" id="csvUrl" placeholder="Paste published Google Sheet CSV URL...">
+      <input type="url" id="csvUrl" placeholder="Paste published Google Sheet CSV URL..." value="https://docs.google.com/spreadsheets/d/e/2PACX-1vRIywnvqgK7XGYOwXRuNRL2PISqC6HLI9hc_S7CO03r3ta3lp3aX9R4-aLsql9_L3TjCIeWrQCoGmIK/pub?gid=1859639164&single=true&output=csv">
       <button onclick="loadSheetData()">Sync Sheet</button>
     </div>
 
@@ -169,8 +165,8 @@
       const saved = localStorage.getItem('gh_sheet_csv');
       if (saved) {
         document.getElementById('csvUrl').value = saved;
-        loadSheetData();
       }
+      loadSheetData();
     };
 
     function loadSheetData() {
